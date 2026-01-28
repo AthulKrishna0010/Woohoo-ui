@@ -6,6 +6,8 @@ import SmartZones from './SmartZones';
 
 
 import HeroScroll from './HeroScroll';
+import Navbar from './Navbar';
+import Testimonials from './Testimonials';
 
 // Hook to track window size for responsive animations
 function useWindowSize() {
@@ -84,6 +86,9 @@ export default function LandingPage() {
                 <SmartZones />
             </div>
 
+
+            {/* 5. CLIENT REVIEWS / TESTIMONIALS (z-20) */}
+            <Testimonials />
 
             {/* GLOBAL UI ELEMENTS */}
             <Navbar show={isHeroFinished} />
@@ -164,41 +169,6 @@ function PowerSourcedSection() {
 }
 
 // Zones code removed in favor of SmartZones component
-
-function Navbar({ show }: { show: boolean }) {
-    return (
-        <motion.nav
-            className="fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-4 md:px-8 py-4 md:py-6 pointer-events-none"
-            initial={{ opacity: 0, y: -20 }}
-            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-        >
-            <div className="w-12 h-12 md:w-16 md:h-16 pointer-events-auto">
-                <motion.img
-                    src="/logo.svg"
-                    alt="Woohoo Logo"
-                    className="w-full h-full object-contain"
-                />
-            </div>
-
-            <div className="hidden md:flex gap-10 text-lg font-bold tracking-widest uppercase text-white font-bebas pointer-events-auto">
-                {['Membership', 'Locations', 'Trainers'].map((item) => (
-                    <a
-                        key={item}
-                        href="#"
-                        className="relative group overflow-hidden hover:text-[#ccff00] transition-colors duration-300"
-                    >
-                        {item}
-                    </a>
-                ))}
-            </div>
-
-            <div className="md:hidden pointer-events-auto">
-                <div className="text-white font-bebas text-xl">MENU</div>
-            </div>
-        </motion.nav>
-    )
-}
 
 function LoadingSequence() {
     return (

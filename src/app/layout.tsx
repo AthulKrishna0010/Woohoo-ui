@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Footer from "@/components/Footer";
 import { Bebas_Neue, Inter } from "next/font/google"; // Premium typography selection
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${bebasNeue.variable} ${inter.variable} antialiased`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
