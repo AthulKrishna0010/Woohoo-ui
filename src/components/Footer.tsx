@@ -7,7 +7,7 @@ import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
     return (
-        <footer className="relative bg-black w-full overflow-hidden pt-20 pb-10">
+        <footer className="relative z-20 bg-black w-full overflow-hidden pt-20 pb-10">
             {/* Top Fade Gradient for Smooth Transition */}
             {/* Top Fade Gradient for Smooth Transition with Grain */}
             <div className="absolute top-0 left-0 w-full h-64 z-20 pointer-events-none">

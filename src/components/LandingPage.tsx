@@ -7,6 +7,7 @@ import SmartZones from './SmartZones';
 
 import HeroScroll from './HeroScroll';
 import Navbar from './Navbar';
+import RecoveryZones from './RecoveryZones';
 import Testimonials from './Testimonials';
 
 // Hook to track window size for responsive animations
@@ -86,9 +87,15 @@ export default function LandingPage() {
                 <SmartZones />
             </div>
 
+            {/* 5. RECOVERY ZONES (z-20) */}
+            <div className="relative z-20 w-full bg-black">
+                <RecoveryZones />
+            </div>
 
-            {/* 5. CLIENT REVIEWS / TESTIMONIALS (z-20) */}
-            <Testimonials />
+            {/* 6. CLIENT REVIEWS / TESTIMONIALS (z-20) */}
+            <div className="relative z-20 w-full bg-black">
+                <Testimonials />
+            </div>
 
             {/* GLOBAL UI ELEMENTS */}
             <Navbar show={isHeroFinished} />

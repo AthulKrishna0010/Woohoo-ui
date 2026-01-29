@@ -41,7 +41,10 @@ export default function Testimonials() {
     return (
         <section className="w-full bg-black py-24 px-4 md:px-8 relative overflow-hidden">
             {/* Background Gradient/Glow for ambiance */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-900/50 via-black to-black opacity-50 pointer-events-none" />
+            <div className="absolute inset-0 z-0">
+                <img src="/testbg.png" alt="Testimonials Background" className="w-full h-full object-cover opacity-70" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+            </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Section Header */}
