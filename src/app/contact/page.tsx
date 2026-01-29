@@ -157,17 +157,19 @@ export default function ContactPage() {
                         <div className="grid md:grid-cols-2 gap-8 mb-12">
                             {/* Gym Studio */}
                             <FadeInUp delay={0.1}>
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-[#ccff00] p-4 rounded text-black shrink-0">
-                                        <FaMapMarkerAlt size={24} />
+                                <a href="https://maps.app.goo.gl/Durn9arzW4tMGSbw7" target="_blank" rel="noopener noreferrer" className="block hover:text-[#ccff00] transition-colors">
+                                    <div className="flex items-start gap-4">
+                                        <div className="bg-[#ccff00] p-4 rounded text-black shrink-0">
+                                            <FaMapMarkerAlt size={24} />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bebas text-xl text-white mb-1">Gym Studio</h3>
+                                            <p className="text-gray-400 text-sm">
+                                                2nd and 3rd Floor, KP Landmark,<br />7th Main, 100Ft road,<br />Indiranagar, Bangalore 560008
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="font-bebas text-xl text-white mb-1">Gym Studio</h3>
-                                        <p className="text-gray-400 text-sm">
-                                            123 Fitness Blvd,<br />Indiranagar, Bangalore
-                                        </p>
-                                    </div>
-                                </div>
+                                </a>
                             </FadeInUp>
                             {/* Working Hours */}
                             <FadeInUp delay={0.2}>
@@ -178,7 +180,7 @@ export default function ContactPage() {
                                     <div>
                                         <h3 className="font-bebas text-xl text-white mb-1">Working Hours</h3>
                                         <p className="text-gray-400 text-sm">
-                                            Mon-Sat : 05:00 - 23:00<br />Sunday : 06:00 - 22:00
+                                            Mon-Sat : 5:00 am - 11:00 pm<br />Sunday : 7:00 am - 7:00 pm
                                         </p>
                                     </div>
                                 </div>
@@ -192,7 +194,7 @@ export default function ContactPage() {
                                     <div>
                                         <h3 className="font-bebas text-xl text-white mb-1">Call Us</h3>
                                         <p className="text-gray-400 text-sm">
-                                            +91 98765 43210<br />+91 12345 67890
+                                            <a href="tel:8877221131" className="hover:text-[#ccff00] transition-colors">8877221131</a>
                                         </p>
                                     </div>
                                 </div>

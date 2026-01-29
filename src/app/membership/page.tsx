@@ -74,7 +74,7 @@ const PricingCard = ({
 
 export default function MembershipPage() {
     return (
-        <div className="bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black min-h-screen pt-28">
+        <div className="bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black min-h-screen">
             <Navbar show={true} />
 
             {/* 1. HERO SECTION */}
