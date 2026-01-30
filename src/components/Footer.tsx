@@ -132,15 +132,18 @@ export default function Footer() {
 
                 {/* 3. Copyright / Branding Text */}
                 <motion.div
-                    className="text-center md:text-right w-full border-t border-gray-900 pt-8"
+                    className="text-center w-full border-t border-gray-900 pt-8"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <p className="text-gray-400 text-sm">
-                        &copy; 2026 WooHoo Health Club. All rights reserved. <br className="md:hidden" />
+                    <p className="text-gray-400 text-sm flex flex-col md:flex-row items-center justify-center gap-2">
+                        <span>&copy; 2026 WooHoo Health Club. All rights reserved.</span>
                         <span className="hidden md:inline"> | </span>
-                        Designed for <span className="text-gray-300">Pure Energy</span>.
+                        <a href="https://lsoptimaize.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                            <span>Designed and Powered by</span>
+                            <img src="/lso_new.png" alt="LSO" className="h-10 object-contain" />
+                        </a>
                     </p>
                 </motion.div>
 

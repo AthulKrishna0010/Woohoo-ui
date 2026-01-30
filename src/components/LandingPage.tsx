@@ -10,6 +10,8 @@ import Navbar from './Navbar';
 import RecoveryZones from './RecoveryZones';
 import Testimonials from './Testimonials';
 
+import IntroLoader from './IntroLoader';
+
 // Hook to track window size for responsive animations
 function useWindowSize() {
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -26,7 +28,6 @@ function useWindowSize() {
 
 export default function LandingPage() {
     // Scroll handling for Parallax effect (Post-Hero)
-    // Scroll handling for Parallax effect (Post-Hero)
     // const heroScrollRef = useRef<HTMLDivElement>(null);
     // const { scrollYProgress } = useScroll({
     //     target: heroScrollRef,
@@ -35,6 +36,7 @@ export default function LandingPage() {
 
     const [isHeroFinished, setIsHeroFinished] = useState(false);
     const [hideNavbarInZones, setHideNavbarInZones] = useState(false);
+    const [showLoader, setShowLoader] = useState(true);
 
     // Track scroll for Navbar behavior in Smart Zones
     const smartZonesRef = useRef<HTMLDivElement>(null);
@@ -59,44 +61,27 @@ export default function LandingPage() {
         }
     });
 
-    // Initial Loading State (Optional, keeping it simple as per request)
-    // const [isLoading, setIsLoading] = useState(true);
-
     return (
         <div className="relative w-full bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black">
+
+            {/* INTRO LOADER (Insane Load Animation) */}
+            <AnimatePresence>
+                {showLoader && (
+                    <IntroLoader onComplete={() => setShowLoader(false)} />
+                )}
+            </AnimatePresence>
 
             {/* 1. HERO SCROLL LAYER (z-10) */}
             {/* This component handles its own height (400vh) and sticky behavior */}
             <div className="relative z-10 w-full bg-black">
-                <HeroScroll onFinish={(finished) => setIsHeroFinished(finished)} />
+                <HeroScroll
+                    onFinish={(finished) => setIsHeroFinished(finished)}
+                    startVideo={!showLoader}
+                />
             </div>
 
-            {/* 2. SCROLL SPACER (Using this for any subsequent parallax if needed, or remove if HeroScroll handles spacing) */}
-            {/* Since HeroScroll is tall and relative, we might just continue flow. 
-                However, existing code used a fixed hero and a spacer. 
-                HeroScroll is `relative h-[400vh]` so it takes up space naturally. 
-                We don't need an extra spacer div for IT, but we need to check if PowerSourcedSection expects something.
-                PowerSourcedSection was z-20 scrolling over z-10 fixed hero.
-                If HeroScroll scrolls away naturally, PowerSourced can just follow.
-            */}
-
-            {/* 
-               WAIT: The previous design had a FIXED video. user wants to "replace the video... with this scroll frames".
-               Usually scroll frames imply:
-               1. A sticky container that pins the canvas while you scroll.
-               2. The user scrubs through frames.
-               3. At the end, the page continues scrolling?
-               
-               My HeroScroll is `relative h-[400vh]` with a `sticky top-0 h-screen`.
-               So it WILL take up 400vh of space.
-               Text appears at the end.
-               
-               So effectively, the user scrolls 400vh to "watch" the intro.
-               Then correct flow is to have the next section follow.
-            */}
-
-
-
+            {/* 2. SCROLL SPACER */}
+            {/* ... comments removed for brevity ... */}
 
 
             {/* 3. BRAND SHOWCASE SECTION (z-20) 
@@ -200,29 +185,3 @@ function PowerSourcedSection() {
 }
 
 // Zones code removed in favor of SmartZones component
-
-function LoadingSequence() {
-    return (
-        <motion.div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
-            exit={{
-                x: '100%',
-                y: '-100%',
-                transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
-            }}
-        >
-            <motion.div
-                className="relative w-32 h-32 md:w-40 md:h-40"
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-            >
-                <img
-                    src="/logo.svg"
-                    alt="Woohoo Logo"
-                    className="w-full h-full object-contain"
-                />
-            </motion.div>
-        </motion.div>
-    )
-}

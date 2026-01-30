@@ -16,7 +16,7 @@ export default function ScreamPage() {
         <div className="flex flex-col md:flex-row min-h-screen w-full bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black">
 
             {/* LEFT PANEL: HERO BRANDING (50%) */}
-            <div className="relative w-full h-[40vh] md:w-1/2 md:min-h-screen overflow-hidden border-r border-white/10 shrink-0">
+            <div className="relative w-full min-h-[40vh] md:w-1/2 md:min-h-screen overflow-hidden border-r border-white/10 shrink-0">
                 {/* Bg Image */}
                 <div className="absolute inset-0 z-0">
                     <img src="/hero.png" alt="Woohoo Gym" className="w-full h-full object-cover opacity-60" />
@@ -35,13 +35,7 @@ export default function ScreamPage() {
                         <span className="block text-[#ccff00] text-4xl md:text-6xl lg:text-7xl">ENERGY</span>
                     </h1>
 
-                    {/* NEW HOOK BADGE */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5 }}
-                        className="mt-8 bg-[#ccff00] text-black px-6 py-2 rounded-full font-bebas text-xl md:text-2xl transform -rotate-2 hover:rotate-0 transition-transform cursor-default shadow-[0_0_20px_rgba(204,255,0,0.4)]"
-                    >
-                        WIN FREE GYM PASSES
-                    </motion.div>
+                    {/* NEW HOOK BADGE - REMOVED AS REQUESTED */}
                 </div>
             </div>
 
@@ -161,31 +155,29 @@ function IdleView({ onStart }: { onStart: () => void }) {
                 ))}
             </div>
 
-            {/* REWARDS TABLE (Condensed) */}
-            <div className="w-full mb-8 bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-                <div className="flex bg-white/10 p-3 text-[10px] uppercase tracking-[0.2em] font-bold text-white/50">
-                    <span className="w-1/3 text-left pl-2">Loudness Level</span>
-                    <span className="w-1/3 text-center">Reward</span>
-                    <span className="w-1/3 text-right pr-2">Your Status</span>
+            {/* AESTHETIC POSTER VIBE REWARDS SECTION */}
+            <div className="w-full mb-8 relative group overflow-hidden rounded-xl border border-[#ccff00]/30">
+                {/* Background "Paint" Effect */}
+                <div className="absolute inset-0 bg-black">
+                    <div className="absolute inset-0 bg-[#ccff00] opacity-10 mix-blend-overlay filter blur-3xl"></div>
+                    <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#ccff00] rounded-full mix-blend-screen filter blur-[80px] opacity-20 animate-pulse"></div>
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white rounded-full mix-blend-overlay filter blur-[60px] opacity-10"></div>
                 </div>
-                <div className="flex flex-col">
-                    {rewards.map((r, i) => (
-                        <div key={i} className={`flex items-center p-3 md:p-4 border-t border-white/5 ${i === 0 ? 'bg-[#ccff00]/10' : ''}`}>
-                            <div className="w-1/3 text-left">
-                                <span className={`font-bebas text-xl md:text-2xl ${i === 0 ? 'text-[#ccff00]' : 'text-white'}`}>{r.score}</span>
-                            </div>
-                            <div className="w-1/3 text-center">
-                                <span className={`font-bebas text-lg md:text-xl tracking-wide ${i === 0 ? 'text-white' : 'text-white/80'}`}>{r.reward}</span>
-                            </div>
-                            <div className="w-1/3 text-right">
-                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${i === 0 ? "bg-[#ccff00] text-black" : "bg-white/10 text-white/40"
-                                    }`}>
-                                    {r.label}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
+
+                <div className="relative z-10 p-8 flex flex-col items-center text-center">
+                    <h3 className="font-bebas text-4xl md:text-5xl text-white transform -rotate-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        SCREAM <span className="text-[#ccff00] text-5xl md:text-6xl drop-shadow-[0_0_15px_rgba(204,255,0,0.6)]">WOOHOO</span>
+                    </h3>
+                    <p className="font-bebas text-xl md:text-2xl text-white/90 mt-2 tracking-wider">
+                        TO WIN <span className="text-[#ccff00] underline decoration-wavy decoration-[#ccff00]/50 underline-offset-4">1 - 7 DAYS</span> OF FREE PASS
+                    </p>
+                    <p className="font-inter text-xs md:text-sm text-white/60 mt-4 uppercase tracking-[0.3em] border-t border-white/10 pt-4 w-full">
+                        @ WOOHOO HEALTH CLUB
+                    </p>
                 </div>
+
+                {/* Overlay Texture */}
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
             </div>
 
             {/* CTA */}
