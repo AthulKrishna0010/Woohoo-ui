@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
-const FRAME_COUNT = 40;
+const FRAME_COUNT = 220;
 const FRAME_PATH = '/intro/ezgif-frame-';
 const FRAME_EXT = '.jpg';
 

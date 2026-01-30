@@ -34,6 +34,30 @@ export default function LandingPage() {
     // });
 
     const [isHeroFinished, setIsHeroFinished] = useState(false);
+    const [hideNavbarInZones, setHideNavbarInZones] = useState(false);
+
+    // Track scroll for Navbar behavior in Smart Zones
+    const smartZonesRef = useRef<HTMLDivElement>(null);
+    const { scrollY } = useScroll();
+
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious() || 0;
+        const isScrollingUp = latest < previous;
+
+        if (smartZonesRef.current) {
+            const rect = smartZonesRef.current.getBoundingClientRect();
+            // Check if we are "inside" the Smart Zones section (it takes up the screen)
+            // top <= 0 means the top of the section has reached or passed the top of the viewport
+            // bottom > 0 means the bottom of the section hasn't scrolled past the top yet
+            const isInSmartZones = rect.top <= 0 && rect.bottom > 0;
+
+            if (isInSmartZones && isScrollingUp) {
+                setHideNavbarInZones(true);
+            } else {
+                setHideNavbarInZones(false);
+            }
+        }
+    });
 
     // Initial Loading State (Optional, keeping it simple as per request)
     // const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +107,7 @@ export default function LandingPage() {
             </div>
 
             {/* 4. SMART TRAINING ZONES (z-20) */}
-            <div className="relative z-20 w-full bg-black">
+            <div ref={smartZonesRef} className="relative z-20 w-full bg-black">
                 <SmartZones />
             </div>
 
@@ -98,7 +122,7 @@ export default function LandingPage() {
             </div>
 
             {/* GLOBAL UI ELEMENTS */}
-            <Navbar show={isHeroFinished} />
+            <Navbar show={isHeroFinished && !hideNavbarInZones} />
 
         </div>
     );
