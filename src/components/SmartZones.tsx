@@ -110,14 +110,38 @@ export default function SmartZones() {
     }, []);
 
     // --- Render Frame on Canvas ---
+    // --- Stepped Video Progress Logic ---
+    // Optimizing for Iron Yard Hold at the end.
+    // We compressed earlier stages to finish the video transition at 0.84, leaving 0.84-1.0 described as Iron Yard Hold.
+
+    // 0.00 - 0.05: Intro / Title
+    // 0.05 - 0.12: Pull Party HOLD (Video 0)
+    // 0.12 - 0.20: Trans 1 -> Booty (0 -> 0.2)
+    // 0.20 - 0.28: Booty Station HOLD (0.2)
+    // 0.28 - 0.36: Trans 2 -> Pec (0.2 -> 0.4)
+    // 0.36 - 0.44: Pec City HOLD (0.4)
+    // 0.44 - 0.52: Trans 3 -> Cardio (0.4 -> 0.6)
+    // 0.52 - 0.60: Cardio Zone HOLD (0.6)
+    // 0.60 - 0.68: Trans 4 -> Curl (0.6 -> 0.8)
+    // 0.68 - 0.76: Curl Corner HOLD (0.8)
+    // 0.76 - 0.84: Trans 5 -> Iron (0.8 -> 1.0)
+    // 0.84 - 1.00: Iron Yard HOLD (1.0)
+
+    const videoProgress = useTransform(smoothProgress,
+        [0, 0.12, 0.20, 0.28, 0.36, 0.44, 0.52, 0.60, 0.68, 0.76, 0.84, 1],
+        [0, 0, 0.2, 0.2, 0.4, 0.4, 0.6, 0.6, 0.8, 0.8, 1, 1]
+    );
+
+    // --- Render Frame on Canvas ---
     useEffect(() => {
+        // ... (Using videoProgress instead of smoothProgress)
         const render = (val: number) => {
             if (!isLoaded || !canvasRef.current || images.length === 0) return;
 
             const ctx = canvasRef.current.getContext('2d');
             if (!ctx) return;
 
-            // Map progress (0-1) to frame index (0-TOTAL_FRAMES-1)
+            // Map videoProgress (0-1) to frame index (0-TOTAL_FRAMES-1)
             let frameIndex = Math.floor(val * (TOTAL_FRAMES - 1));
             if (frameIndex < 0) frameIndex = 0;
             if (frameIndex >= TOTAL_FRAMES) frameIndex = TOTAL_FRAMES - 1;
@@ -154,46 +178,46 @@ export default function SmartZones() {
             }
         };
 
-        // Render initial frame
-        render(smoothProgress.get());
+        // Note: We use videoProgress here
+        render(videoProgress.get());
 
-        // Subscribe to changes
-        const unsubscribe = smoothProgress.on("change", (v) => {
+        const unsubscribe = videoProgress.on("change", (v) => {
             render(v);
         });
 
         return () => unsubscribe();
-    }, [isLoaded, images, smoothProgress]);
+    }, [isLoaded, images, videoProgress]);
 
     // --- Text Opacity Transforms ---
+    // Recalculated for new ranges (Shifted earlier to make room for Iron Yard)
 
-    // Entry Title: 0-5%
-    const titleOpacity = useTransform(smoothProgress, [0, 0.05], [1, 0]);
-    const entryBgOpacity = useTransform(smoothProgress, [0, 0.05], [1, 0]);
+    // Entry Title: 0-4%
+    const titleOpacity = useTransform(smoothProgress, [0, 0.04], [1, 0]);
+    const entryBgOpacity = useTransform(smoothProgress, [0, 0.04], [1, 0]);
 
-    // Pull Party: 0 - 20.4% (Text visible ~5-18%)
-    const pullPartyOpacity = useTransform(smoothProgress, [0.05, 0.1, 0.15, 0.18], [0, 1, 1, 0]);
-    const pullPartyY = useTransform(smoothProgress, [0.05, 0.1], [50, 0]);
+    // Pull Party: Visible 4-10% (Out before 12%)
+    const pullPartyOpacity = useTransform(smoothProgress, [0.03, 0.05, 0.10, 0.12], [0, 1, 1, 0]);
+    const pullPartyY = useTransform(smoothProgress, [0.03, 0.05], [50, 0]);
 
-    // Booty Station: 20.4 - 40.2% (Text visible ~22-38%)
-    const bootyStationOpacity = useTransform(smoothProgress, [0.22, 0.25, 0.35, 0.38], [0, 1, 1, 0]);
-    const bootyStationY = useTransform(smoothProgress, [0.22, 0.25], [50, 0]);
+    // Booty Station: Visible 21-27% (Out before 28%)
+    const bootyStationOpacity = useTransform(smoothProgress, [0.19, 0.21, 0.27, 0.29], [0, 1, 1, 0]);
+    const bootyStationY = useTransform(smoothProgress, [0.19, 0.21], [50, 0]);
 
-    // Pec City: 40.2 - 60.1% (Text visible ~42-58%)
-    const pecCityOpacity = useTransform(smoothProgress, [0.42, 0.45, 0.55, 0.58], [0, 1, 1, 0]);
-    const pecCityY = useTransform(smoothProgress, [0.42, 0.45], [50, 0]);
+    // Pec City: Visible 37-43% (Out before 44%)
+    const pecCityOpacity = useTransform(smoothProgress, [0.35, 0.37, 0.43, 0.45], [0, 1, 1, 0]);
+    const pecCityY = useTransform(smoothProgress, [0.35, 0.37], [50, 0]);
 
-    // Cardio Zone: 60.1 - 80.1% (Text visible ~62-78%)
-    const cardioZoneOpacity = useTransform(smoothProgress, [0.62, 0.65, 0.75, 0.78], [0, 1, 1, 0]);
-    const cardioZoneY = useTransform(smoothProgress, [0.62, 0.65], [50, 0]);
+    // Cardio Zone: Visible 53-59% (Out before 60%)
+    const cardioZoneOpacity = useTransform(smoothProgress, [0.51, 0.53, 0.59, 0.61], [0, 1, 1, 0]);
+    const cardioZoneY = useTransform(smoothProgress, [0.51, 0.53], [50, 0]);
 
-    // Curl Corner: 80.1 - 100% (Text visible ~82-98%)
-    const curlCornerOpacity = useTransform(smoothProgress, [0.82, 0.85, 0.95, 0.98], [0, 1, 1, 0]);
-    const curlCornerY = useTransform(smoothProgress, [0.82, 0.85], [50, 0]);
+    // Curl Corner: Visible 69-75% (Out before 76%)
+    const curlCornerOpacity = useTransform(smoothProgress, [0.67, 0.69, 0.75, 0.77], [0, 1, 1, 0]);
+    const curlCornerY = useTransform(smoothProgress, [0.67, 0.69], [50, 0]);
 
-    // Iron Yard: End (Visible at very end)
-    const ironYardOpacity = useTransform(smoothProgress, [0.99, 1, 1, 1], [0, 1, 1, 1]);
-    const ironYardY = useTransform(smoothProgress, [0.99, 1], [50, 0]);
+    // Iron Yard: Visible 84-100% (The Grand Finale Hold)
+    const ironYardOpacity = useTransform(smoothProgress, [0.83, 0.85, 1, 1], [0, 1, 1, 1]);
+    const ironYardY = useTransform(smoothProgress, [0.83, 0.85], [50, 0]);
 
 
     return (
