@@ -13,10 +13,10 @@ export default function ScreamPage() {
     const [finalData, setFinalData] = useState<any>(null); // For PDF
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen md:h-screen w-full bg-black text-white md:overflow-hidden font-inter selection:bg-[#ccff00] selection:text-black">
+        <div className="flex flex-col md:flex-row min-h-screen w-full bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black">
 
             {/* LEFT PANEL: HERO BRANDING (50%) */}
-            <div className="relative w-full h-[40vh] md:w-1/2 md:h-full overflow-hidden border-r border-white/10 shrink-0">
+            <div className="relative w-full h-[40vh] md:w-1/2 md:min-h-screen overflow-hidden border-r border-white/10 shrink-0">
                 {/* Bg Image */}
                 <div className="absolute inset-0 z-0">
                     <img src="/hero.png" alt="Woohoo Gym" className="w-full h-full object-cover opacity-60" />
@@ -34,11 +34,19 @@ export default function ScreamPage() {
                         <span className="block text-white text-3xl md:text-5xl lg:text-6xl" style={{ textShadow: '4px 4px 0px rgba(255,255,255,0.2)' }}>OF PURE</span>
                         <span className="block text-[#ccff00] text-4xl md:text-6xl lg:text-7xl">ENERGY</span>
                     </h1>
+
+                    {/* NEW HOOK BADGE */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5 }}
+                        className="mt-8 bg-[#ccff00] text-black px-6 py-2 rounded-full font-bebas text-xl md:text-2xl transform -rotate-2 hover:rotate-0 transition-transform cursor-default shadow-[0_0_20px_rgba(204,255,0,0.4)]"
+                    >
+                        WIN FREE GYM PASSES
+                    </motion.div>
                 </div>
             </div>
 
             {/* RIGHT PANEL: CHALLENGE INTERFACE (50%) */}
-            <div className="relative w-full min-h-[60vh] md:w-1/2 md:h-full bg-[#0a0a0a] flex flex-col items-center justify-center p-4 md:p-8 md:overflow-y-auto">
+            <div className="relative w-full min-h-[60vh] md:w-1/2 md:min-h-screen bg-[#0a0a0a] flex flex-col items-center p-4 md:p-8">
                 <AnimatePresence mode="wait">
                     {state === "IDLE" && (
                         <IdleView key="idle" onStart={() => setState("RECORDING")} />
@@ -119,72 +127,78 @@ export default function ScreamPage() {
 
 function IdleView({ onStart }: { onStart: () => void }) {
     const rewards = [
-        { score: "1200+", reward: "7 Day Pass" },
-        { score: "850+", reward: "5 Day Pass" },
-        { score: "600+", reward: "3 Day Pass" },
-        { score: "350+", reward: "1 Day Pass" },
+        { score: "1200+", reward: "7 Day Pass", label: "LEGENDARY" },
+        { score: "850+", reward: "5 Day Pass", label: "ELITE" },
+        { score: "600+", reward: "3 Day Pass", label: "PRO" },
+        { score: "350+", reward: "1 Day Pass", label: "ROOKIE" },
     ];
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-md text-center"
+            className="w-full max-w-lg text-center flex flex-col my-auto"
         >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bebas text-white mb-2 md:mb-4">WOOHOO CHALLENGE</h2>
+            {/* HERDER */}
+            <h2 className="text-5xl md:text-7xl font-bebas text-white mb-2 leading-none">
+                SCREAM <span className="text-[#ccff00]">TO WIN</span>
+            </h2>
+            <p className="text-white/60 font-inter text-sm md:text-base mb-8 max-w-md mx-auto">
+                Unleash your loudest scream to unlock free gym passes. The louder you go, the bigger the reward.
+            </p>
 
-            {/* Rules Section */}
-            <div className="mb-4 md:mb-6 border-l-4 border-[#ccff00] pl-4 md:pl-6 text-left relative overflow-hidden group">
-                <div className="absolute inset-0 bg-[#ccff00]/5 -skew-x-12 translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-                <p className="relative z-10 text-white font-bebas text-lg md:text-xl tracking-wider mb-1">
-                    THE RULE IS SIMPLE.
-                </p>
-                <p className="relative z-10 text-white/90 font-inter text-xs md:text-sm leading-relaxed max-w-sm">
-                    UNLEASH YOUR VOICE. SCREAM <span className="text-[#ccff00] font-black italic">WOOHOO</span> TO THE MAX.
-                    ONE SHOT. TOTAL CHAOS. <span className="underline decoration-[#ccff00] underline-offset-4">MAKE HISTORY.</span>
-                </p>
-            </div>
-
-            <div className="w-full mb-6 md:mb-8 flex flex-col gap-2 md:gap-3">
-                {rewards.map((r, i) => (
-                    <div
-                        key={i}
-                        className={`relative group flex items-center justify-between p-3 md:p-4 rounded-lg border transition-all duration-300 ${i === 0
-                            ? "bg-[#ccff00] border-[#ccff00] text-black scale-105 shadow-[0_0_30px_rgba(204,255,0,0.3)] z-10"
-                            : "bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/30"
-                            }`}
-                    >
-                        <div className="flex flex-col text-left">
-                            <span className={`text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold ${i === 0 ? "text-black/60" : "text-white/40"}`}>
-                                Target Score
-                            </span>
-                            <span className="text-2xl md:text-3xl font-bebas leading-none">{r.score}</span>
-                        </div>
-
-                        <div className="h-6 md:h-8 w-[1px] bg-current opacity-20 mx-2 md:mx-4" />
-
-                        <div className="flex flex-col text-right">
-                            <span className={`text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold ${i === 0 ? "text-black/60" : "text-white/40"}`}>
-                                Reward
-                            </span>
-                            <span className="text-xl md:text-2xl font-bebas leading-none tracking-wide">{r.reward}</span>
-                        </div>
-
-                        {/* Shine Effect for Top Card */}
-                        {i === 0 && (
-                            <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-                                <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 animate-[shimmer_3s_infinite]" />
-                            </div>
-                        )}
+            {/* HOW IT WORKS (3 STEPS) */}
+            <div className="grid grid-cols-3 gap-4 mb-8 w-full">
+                {[
+                    { title: "1. SCREAM", icon: "🎤", desc: "Shout loud into the mic" },
+                    { title: "2. SCORE", icon: "⚡", desc: "Hit the high numbers" },
+                    { title: "3. EARN", icon: "🎟️", desc: "Get instant Gym Pass" },
+                ].map((step, i) => (
+                    <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3 md:p-4 flex flex-col items-center hover:bg-white/10 transition-colors">
+                        <span className="text-2xl md:text-3xl mb-2 grayscale opacity-80">{step.icon}</span>
+                        <h4 className="font-bebas text-lg md:text-xl text-white mb-1 tracking-wide">{step.title}</h4>
+                        <p className="text-[10px] md:text-xs text-white/50 leading-tight uppercase font-bold tracking-wider">{step.desc}</p>
                     </div>
                 ))}
             </div>
 
+            {/* REWARDS TABLE (Condensed) */}
+            <div className="w-full mb-8 bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                <div className="flex bg-white/10 p-3 text-[10px] uppercase tracking-[0.2em] font-bold text-white/50">
+                    <span className="w-1/3 text-left pl-2">Loudness Level</span>
+                    <span className="w-1/3 text-center">Reward</span>
+                    <span className="w-1/3 text-right pr-2">Your Status</span>
+                </div>
+                <div className="flex flex-col">
+                    {rewards.map((r, i) => (
+                        <div key={i} className={`flex items-center p-3 md:p-4 border-t border-white/5 ${i === 0 ? 'bg-[#ccff00]/10' : ''}`}>
+                            <div className="w-1/3 text-left">
+                                <span className={`font-bebas text-xl md:text-2xl ${i === 0 ? 'text-[#ccff00]' : 'text-white'}`}>{r.score}</span>
+                            </div>
+                            <div className="w-1/3 text-center">
+                                <span className={`font-bebas text-lg md:text-xl tracking-wide ${i === 0 ? 'text-white' : 'text-white/80'}`}>{r.reward}</span>
+                            </div>
+                            <div className="w-1/3 text-right">
+                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${i === 0 ? "bg-[#ccff00] text-black" : "bg-white/10 text-white/40"
+                                    }`}>
+                                    {r.label}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* CTA */}
             <button
                 onClick={onStart}
-                className="w-full py-4 bg-[#ccff00] text-black font-bebas text-2xl uppercase hover:bg-white transition-colors"
+                className="group relative w-full py-5 bg-[#ccff00] text-black font-bebas text-3xl uppercase tracking-widest overflow-hidden rounded-lg hover:scale-[1.02] transition-transform"
             >
-                Start Challenge
+                <div className="absolute inset-0 bg-white/40 translate-y-full group-hover:translate-y-0 transition-transform duration-300 transform skew-y-12" />
+                <span className="relative z-10">Start Challenge</span>
             </button>
+            <p className="mt-3 text-[10px] text-white/30 uppercase tracking-widest">
+                *Microphone access required
+            </p>
         </motion.div>
     );
 }
@@ -307,7 +321,7 @@ function RecordingView({ onFinish }: { onFinish: (score: number, reward: string)
     return (
         <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="text-center w-full flex flex-col items-center justify-center h-full"
+            className="text-center w-full flex flex-col items-center my-auto"
         >
             <h2 className="text-6xl md:text-8xl font-bebas text-white mb-8 animate-pulse">SCREAM</h2>
 
@@ -374,7 +388,7 @@ function ResultView({ score, reward, onClaim, onRetry }: { score: number, reward
     return (
         <motion.div
             initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ opacity: 0, scale: 1.1 }}
-            className="text-center w-full max-w-md"
+            className="text-center w-full max-w-md my-auto"
         >
             <h3 className="text-white/50 font-bebas text-2xl mb-2">FINAL SCORE</h3>
             <div className="text-[8rem] leading-none font-bebas text-[#ccff00] mb-4" style={{ textShadow: "0 0 40px rgba(204,255,0,0.5)" }}>
@@ -472,9 +486,17 @@ function FormView({ score, reward, onSuccess }: { score: number, reward: string,
     return (
         <motion.div
             initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-            className="w-full max-w-sm"
+            className="w-full max-w-sm my-auto"
         >
-            <h3 className="text-5xl md:text-7xl font-black font-bebas text-white mb-8 text-center text-[#ccff00]">CLAIM YOUR REWARD</h3>
+            <h3 className="text-5xl md:text-7xl font-black font-bebas text-white mb-4 text-center text-[#ccff00]">CLAIM YOUR REWARD</h3>
+
+            <p className="text-white/60 text-center text-sm mb-8 font-inter leading-relaxed">
+                Almost there! Fill out your details below to generate your reward ticket.
+                <br />
+                <span className="text-white block mt-2 font-bold">
+                    1. Fill Form &rarr; 2. Download PDF &rarr; 3. Show at Reception
+                </span>
+            </p>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div>
@@ -556,7 +578,7 @@ function SuccessView({ data }: { data: any }) {
     return (
         <motion.div
             initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center w-full"
+            className="flex flex-col items-center w-full my-auto"
         >
             {/* TICKET UI - Designed for Capture */}
             <div
