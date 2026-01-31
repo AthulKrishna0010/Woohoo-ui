@@ -8,7 +8,6 @@ import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
 export default function Footer() {
     return (
         <footer className="relative z-20 bg-black w-full overflow-hidden pt-20 pb-10">
-            {/* Top Fade Gradient for Smooth Transition */}
             {/* Top Fade Gradient for Smooth Transition with Grain */}
             <div className="absolute top-0 left-0 w-full h-64 z-20 pointer-events-none">
                 {/* Smooth Gradient Base */}
@@ -25,64 +24,15 @@ export default function Footer() {
                 ></div>
             </div>
 
-            {/* BACKGROUND IMAGE WITH SUNLIGHT FADE EFFECT */}
-            {/* BACKGROUND IMAGE WITH SUNLIGHT FADE EFFECT */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
-                <motion.div
-                    className="relative w-full h-full"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 1.5 }}
-                >
-                    {/* The Image */}
-                    <img
-                        src="/woohoo-footer.png"
-                        alt="Woohoo Footer Art"
-                        className="w-full h-full object-cover opacity-60"
-                    />
-
-                    {/* Sunlight Fade Mask / Overlay */}
-                    <div
-                        className="absolute inset-0 bg-black"
-                        style={{
-                            mixBlendMode: 'multiply',
-                            background: `
-                                radial-gradient(circle at 50% 50%, transparent 20%, black 80%),
-                                linear-gradient(to top, transparent 0%, black 100%)
-                            `
-                        }}
-                    ></div>
-
-                    {/* Breathing Light Effect */}
-                    <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-transparent via-[#ccff00]/10 to-transparent"
-                        animate={{ opacity: [0.3, 0.6, 0.3] }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        style={{ mixBlendMode: 'overlay' }}
-                    />
-                    <motion.div
-                        className="absolute inset-0"
-                        style={{
-                            background: 'radial-gradient(circle at 50% 60%, rgba(204, 255, 0, 0.15) 0%, transparent 60%)',
-                            mixBlendMode: 'screen'
-                        }}
-                        animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}
-                        transition={{
-                            duration: 2.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    />
-                </motion.div>
-            </div>
-
-
             {/* CONTENT */}
             <div className="container mx-auto px-4 md:px-8 relative z-30 flex flex-col items-center justify-between min-h-[300px]">
+
+                {/* LOGO SECTION */}
+                <div className="w-full flex justify-center md:justify-start mb-8 md:mb-12">
+                    <Link href="/" className="w-24 h-24 md:w-32 md:h-32 p-2 rounded-full bg-black/30 backdrop-blur-md border border-white/10 shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                        <img src="/logo.png" alt="Woohoo Logo" className="w-full h-full object-contain" />
+                    </Link>
+                </div>
 
                 {/* 1. Quick Links */}
                 <motion.div
@@ -92,10 +42,9 @@ export default function Footer() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
                     {[
-                        { name: 'Home', href: '/' },
                         { name: 'About', href: '/about' },
                         { name: 'Contact', href: '/contact' },
-                        { name: 'Membership', href: '/membership' }, // Link to membership page
+                        { name: 'Membership', href: '/membership' },
                     ].map((link) => (
                         <Link
                             key={link.name}
@@ -122,7 +71,9 @@ export default function Footer() {
                         <a
                             key={index}
                             href={social.href}
-                            className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-white hover:border-[#ccff00] hover:text-[#black] hover:bg-[#ccff00] transition-all duration-300 group"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-white hover:border-[#ccff00] hover:text-black hover:bg-[#ccff00] transition-all duration-300 group"
                         >
                             <social.Icon className="w-5 h-5" />
                         </a>

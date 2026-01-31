@@ -38,6 +38,20 @@ export default function LandingPage() {
     const [hideNavbarInZones, setHideNavbarInZones] = useState(false);
     const [showLoader, setShowLoader] = useState(true);
 
+    // Check Session Storage for Intro
+    useEffect(() => {
+        const hasSeenIntro = sessionStorage.getItem('woohoo_intro_seen');
+        if (hasSeenIntro) {
+            setShowLoader(false);
+            setIsHeroFinished(true); // If intro seen, navbar should be ready (sticky behavior)
+        }
+    }, []);
+
+    const handleIntroComplete = () => {
+        setShowLoader(false);
+        sessionStorage.setItem('woohoo_intro_seen', 'true');
+    };
+
     // Track scroll for Navbar behavior in Smart Zones
     const smartZonesRef = useRef<HTMLDivElement>(null);
     const { scrollY } = useScroll();
@@ -67,7 +81,7 @@ export default function LandingPage() {
             {/* INTRO LOADER (Insane Load Animation) */}
             <AnimatePresence>
                 {showLoader && (
-                    <IntroLoader onComplete={() => setShowLoader(false)} />
+                    <IntroLoader onComplete={handleIntroComplete} />
                 )}
             </AnimatePresence>
 
@@ -75,7 +89,10 @@ export default function LandingPage() {
             {/* This component handles its own height (400vh) and sticky behavior */}
             <div className="relative z-10 w-full bg-black">
                 <HeroScroll
-                    onFinish={(finished) => setIsHeroFinished(finished)}
+                    onFinish={(finished) => {
+                        // Sticky behavior: Only set to TRUE. Once visible, it stays visible (subject to scroll hide).
+                        if (finished) setIsHeroFinished(true);
+                    }}
                     startVideo={!showLoader}
                 />
             </div>

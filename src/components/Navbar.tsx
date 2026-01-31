@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { IoMenu, IoClose } from 'react-icons/io5';
 
 interface NavbarProps {
@@ -11,6 +11,23 @@ interface NavbarProps {
 
 export default function Navbar({ show }: NavbarProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    const { scrollY } = useScroll();
+
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious() || 0;
+
+        // Hide if scrolling down AND current scroll > 100
+        if (latest > previous && latest > 100) {
+            setIsVisible(false);
+        } else if (latest < previous) {
+            // Show if scrolling up
+            setIsVisible(true);
+        }
+    });
+
+    const isNavbarVisible = show && isVisible;
 
     const navLinks = [
         { name: 'About', href: '/about' },
@@ -23,7 +40,7 @@ export default function Navbar({ show }: NavbarProps) {
             <motion.nav
                 className="fixed top-0 left-0 w-full z-[60] flex justify-between items-center px-4 md:px-8 py-4 md:py-6 pointer-events-none transition-all duration-300 bg-transparent"
                 initial={{ opacity: 0, y: -100 }}
-                animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: -100 }}
+                animate={isNavbarVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
             >
                 {/* Desktop Layout */}

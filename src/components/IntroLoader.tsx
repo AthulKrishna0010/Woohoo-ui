@@ -95,9 +95,20 @@ export default function IntroLoader({ onComplete }: { onComplete: () => void }) 
                 )}
             </div>
 
+            {/* CREDITS */}
+            <motion.div
+                className="absolute bottom-16 w-full flex flex-col md:flex-row items-center justify-center gap-2 text-white/50 text-xs tracking-widest uppercase font-inter z-20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 1 }}
+            >
+                <span>Designed and Powered by</span>
+                <img src="/lso_new.png" alt="LSO" className="h-6 md:h-8 object-contain opacity-80" />
+            </motion.div>
+
             {/* PROGRESS BAR (Optional visual cue) */}
             <motion.div
-                className="absolute bottom-10 left-0 h-1 bg-[#ccff00]"
+                className="absolute bottom-10 left-0 h-1 bg-[#ccff00] z-10"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 5.5, ease: "linear" }}

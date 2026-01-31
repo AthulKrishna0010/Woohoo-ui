@@ -92,18 +92,22 @@ export default function ContactPage() {
     ];
 
     return (
-        <div className="bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black min-h-screen pt-28">
+        <div className="bg-black text-white font-inter selection:bg-[#ccff00] selection:text-black min-h-screen">
             <Navbar show={true} />
 
             {/* 1. HERO SECTION */}
             <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
                 {/* Background Placeholder */}
                 <div className="absolute inset-0 z-0">
-                    <img
-                        src="/contact-page.JPG"
-                        alt="Contact Hero"
-                        className="w-full h-full object-cover object-top"
-                    />
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                    >
+                        <source src="/contact.mp4" type="video/mp4" />
+                    </video>
                     <div className="absolute inset-0 bg-black/60 z-10" />
                 </div>
 
