@@ -144,7 +144,7 @@ export default function AudioLoudnessRecorder() {
 
     const calculateRawScore = (rms: number) => {
         const SCORING_MAX = 2000;
-        const BASE_SCORE = 555;
+        const BASE_SCORE = 855;
         const normalizedInput = Math.min(rms / 0.9, 1.0);
         let rawScore = BASE_SCORE + (Math.pow(normalizedInput, 2.5) * SCORING_MAX);
         return Math.floor(rawScore);
